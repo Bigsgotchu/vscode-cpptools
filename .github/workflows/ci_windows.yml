@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -30,16 +30,13 @@ jobs:
         run: yarn run lint
         working-directory: Extension
 
-      - name: Run unit tests
-        run: yarn test
+      - name: Compile Test Sources
+        run: yarn run pretest
         working-directory: Extension
 
-#      # NOTE : We can't run the test that require the native binary files
-#      #        yet -- there will be an update soon that allows the tester to 
-#      #        acquire them on-the-fly
-#      - name: Run simple vscode unit tests
-#        run: yarn test --scenario=SingleRootProject
-#        working-directory: Extension
+      - name: Run unit tests
+        run: yarn run unitTests
+        working-directory: Extension
 
 #      - name: Run languageServer integration tests
 #        run: yarn run integrationTests

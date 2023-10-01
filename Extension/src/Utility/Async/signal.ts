@@ -67,11 +67,9 @@ export class Signal<T> implements Promise<T>, Resolveable<T> {
      * @param value
      */
     resolve(value: T): Resolveable<T> {
-        if (!this.isCompleted) {
-            const p = this.promise;
-            this.promise = new ManualPromise<T>();
-            p.resolve(value);
-        }
+        const p = this.promise;
+        this.promise = new ManualPromise<T>();
+        p.resolve(value);
         return this;
     }
 
@@ -82,17 +80,13 @@ export class Signal<T> implements Promise<T>, Resolveable<T> {
      * @param value
      */
     reject(reason: any) {
-        if (!this.isCompleted) {
-            const p = this.promise;
-            this.promise = new ManualPromise<T>();
-            p.reject(reason);
-        }
+        const p = this.promise;
+        this.promise = new ManualPromise<T>();
+        p.reject(reason);
         return this;
     }
 
-    dispose(value?: T) {
-        if (!this.isCompleted) {
-            this.promise.resolve(value);
-        }
+    dispose() {
+        this.promise.resolve();
     }
 }

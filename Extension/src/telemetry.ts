@@ -9,7 +9,6 @@ import { getExperimentationServiceAsync, IExperimentationService, IExperimentati
 import * as util from './common';
 import { CppSettings } from './LanguageServer/settings';
 import { logAndReturn } from './Utility/Async/returns';
-import { is } from './Utility/System/guards';
 
 interface IPackageInfo {
     name: string;
@@ -112,7 +111,7 @@ export function logDebuggerEvent(eventName: string, properties?: { [key: string]
 
     // simpler expression of the original:
     // Uses 'then' instead of 'await' because telemetry should be "fire and forget".
-    if (is.promise(initializationPromise)) {
+    if (initializationPromise) {
         return void initializationPromise.catch(logAndReturn.undefined).then(sendTelemetry).catch(logAndReturn.undefined);
     }
     sendTelemetry();
@@ -126,7 +125,7 @@ export function logLanguageServerEvent(eventName: string, properties?: { [key: s
         }
     };
 
-    if (is.promise(initializationPromise)) {
+    if (initializationPromise) {
         return void initializationPromise.catch(logAndReturn.undefined).then(sendTelemetry).catch(logAndReturn.undefined);
     }
     sendTelemetry();

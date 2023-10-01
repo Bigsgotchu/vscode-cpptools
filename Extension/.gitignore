@@ -34,4 +34,3 @@ localized_string_ids.h
 src/nativeStrings.ts
 
 vscode*.d.ts
-.scripts/_*
